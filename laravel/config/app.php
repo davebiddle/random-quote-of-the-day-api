@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Random Quote of the Day'),
 
     /*
     |--------------------------------------------------------------------------
@@ -175,6 +175,10 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        /*
+         * Random QOTD Service Providers
+         */
+        App\Providers\QuoteFakerServiceProvider::class,
     ],
 
     /*
@@ -228,5 +232,4 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
     ],
-
 ];

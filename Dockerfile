@@ -7,7 +7,7 @@ FROM ubuntu:20.04
 # Install required packages
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends --quiet ca-certificates \
-    apache2 php7.4 libapache2-mod-php7.4 php7.4-bcmath php7.4-mbstring wget vim
+    apache2 php7.4 libapache2-mod-php7.4 php7.4-bcmath php7.4-mbstring php-mysql wget vim
 
 # Configure PHP server timezone
 # https://serverfault.com/a/949998
