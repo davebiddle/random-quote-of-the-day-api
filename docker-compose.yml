@@ -1,15 +1,12 @@
-version: '3'
+version: "3"
 
 # Add the Traefik proxy network, to enable Traefik to access these services
 networks:
-#  local:
   public:
     external:
-      name:
-        traefik_proxygateway
+      name: traefik_proxygateway
 
 services:
-
   app:
     build:
       context: ./
@@ -22,45 +19,28 @@ services:
       # Explicitly tell Traefik to expose this container
       - "traefik.enable=true"
       # The domain this service will respond to
-      - "traefik.http.routers.app.rule=Host(`laravel-test.localhost`)"
+      - "traefik.http.routers.app.rule=Host(`random-qotd.localhost`)"
       # Allow request only from the predefined entry point named "web"
       - "traefik.http.routers.app.entrypoints=web"
-#      - "traefik.docker.network = traefik_proxygateway"
+      # - "traefik.docker.network = traefik_proxygateway"
     networks:
-    - public
-#    - local
+      - public
+      - default
 
   mailhog:
     image: mailhog/mailhog:v1.0.0
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.mailhog.rule=Host(`mail.laravel-test.localhost`)"
-      - "traefik.http.routers.mailhog.entrypoints=mailhog"
-#      - "traefik.docker.network = traefik_proxygateway"
-    networks:
-      - public
-#      - local
 
   mysql:
     image: mysql:5.7
-    container_name: db.laravel-test.localhost
-    env_file: ./laravel/.env
-    labels:
-      - "traefik.enable=true"
-      - "traefik.tcp.routers.mysql.rule=HostSNI(`*`)"
-      - "traefik.tcp.routers.mysql.entrypoints=mysql"
-#      - "traefik.tcp.routers.mysql.tls=true"
-#      - "traefik.tcp.routers.mysql.tls.passthrough=true"
-#      - "traefik.tcp.routers.mysql.service=mysql-svc"
-#      - "traefik.tcp.services.mysql-svc.loadbalancer.server.port=3306"
-#      - "traefik.docker.network = traefik_proxygateway"
-    networks:
-      - public
-#      - local
+    env_file: .env
+    ports:
+      - "3306:3306"
     tty: true
     volumes:
       - mysql-data:/var/lib/mysql
       - mysql-config:/etc/mysql
+    networks:
+      - default
 
   composer:
     image: composer
