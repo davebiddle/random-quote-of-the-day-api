@@ -16,6 +16,8 @@ use App\Quote;
 |
 */
 
-Route::middleware('auth:api')->get('/quotes', function() {
-    return response()->json(Quote::all());
-});
+Route::get('/quotes', 'API\QuoteController@index');
+
+Route::get('/quotes/latest', 'API\QuoteController@latest');
+
+Route::get('/quotes/previous', 'API\QuoteController@previous');
