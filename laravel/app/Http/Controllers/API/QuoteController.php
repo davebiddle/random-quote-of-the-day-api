@@ -37,7 +37,7 @@ class QuoteController extends Controller
      */
     public function latest()
     {
-        return response()->json(Quote::latest()->first());
+        return response()->json(Quote::latest()->with('author')->first());
     }
 
     /**
