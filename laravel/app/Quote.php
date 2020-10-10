@@ -18,4 +18,19 @@ class Quote extends Model
     public function author() {
         return $this->hasOne(Author::class);
     }
+
+    /**
+     * Scope a query to only include the three latest quotes,
+     * starting from the second latest quote.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  int  $limit
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopePrevious($query, $limit = 0)
+    {
+        return $query->orderBy('created_at', 'desc')
+            ->offset(1)
+            ->limit($limit);
+    }
 }

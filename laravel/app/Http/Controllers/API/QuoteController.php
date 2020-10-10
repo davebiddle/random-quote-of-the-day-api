@@ -42,17 +42,14 @@ class QuoteController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Return the three lastest quotes,
+     * starting from the second lastest quote.
      *
      * @return \Illuminate\Http\Response
      */
-    public function previous()
+    public function previous($limit)
     {
         // 
-        return response()->json(
-            Quote::orderBy('created_at', 'desc')
-            ->limit(3)
-            ->get()
-        );
+        return response()->json(Quote::previous($limit)->get());
     }
 }
