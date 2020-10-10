@@ -20,4 +20,4 @@ Route::get('/quotes', 'API\QuoteController@index');
 
 Route::get('/quotes/latest', 'API\QuoteController@latest');
 
-Route::get('/quotes/previous/{limit?}', 'API\QuoteController@previous');
+Route::get('/quotes/previous/{limit}', 'API\QuoteController@previous');

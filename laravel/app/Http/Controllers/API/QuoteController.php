@@ -37,19 +37,17 @@ class QuoteController extends Controller
      */
     public function latest()
     {
-        // 
         return response()->json(Quote::latest()->first());
     }
 
     /**
-     * Return the three lastest quotes,
-     * starting from the second lastest quote.
+     * Return the specified number of latest quotes,
+     * starting from the second latest quote.
      *
      * @return \Illuminate\Http\Response
      */
     public function previous($limit)
     {
-        // 
-        return response()->json(Quote::previous($limit)->get());
+        return response()->json(Quote::previous($limit)->with('author')->get());
     }
 }

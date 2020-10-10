@@ -16,7 +16,7 @@ class Quote extends Model
     ];
 
     public function author() {
-        return $this->hasOne(Author::class);
+        return $this->belongsTo(Author::class);
     }
 
     /**
