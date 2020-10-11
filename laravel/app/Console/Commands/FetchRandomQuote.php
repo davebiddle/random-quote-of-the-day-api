@@ -12,10 +12,15 @@ class fetchRandomQuote extends Command
 {
     /**
      * The name and signature of the console command.
+     * 
+     * The optional 'created_date' param will be used for
+     * setting the 'created_at' column in the Quote model,
+     * is supplied.
      *
      * @var string
      */
-    protected $signature = 'rapidapi:fetch';
+    protected $signature = 'rapidapi:fetch 
+                            {created_date? : will be used for setting the `created_at` column in the Quote model, if supplied}';
 
     /**
      * The console command description.
@@ -44,6 +49,11 @@ class fetchRandomQuote extends Command
         // Fetch random quote and check if it is unique in the database. 
         // If so, insert. Otherwise, repeat fetch/check/insert.
         do {
+            // The RapidAPI endpoint used for retrieving Quote data has a 
+            // rate limit of 1 request per second. So let's hang around for a bit
+            // before making a request.
+            sleep(5); // to be on the safe side!
+            
             $response = $request->fetchRandomQuote();
 
             if ($response->failed()) {
@@ -66,6 +76,13 @@ class fetchRandomQuote extends Command
                 'link' => $author['url'],
             ]
         )->id;
+
+        // if a `created_date` argument has been passed, use it to set the 
+        // `created_at` column in the Quote model
+        $created_date = $this->argument('created_date');
+        if (!empty($created_date)) {
+            $quote->created_at = $created_date;
+        }
 
         $quote->save();
     }
