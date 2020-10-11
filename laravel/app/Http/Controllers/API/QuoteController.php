@@ -20,14 +20,16 @@ class QuoteController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * This endpoint is used for the Previous Quotes Listing,
+     * so we use the 'previous' scope together with pagination
+     * to retrieve the Quotes to return.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
         // 4 quotes per page :: Todo :: 'per page' filter
-        return response()->json(Quote::paginate(4));
+        return response()->json(Quote::previous(0)->with('author')->paginate(4));
     }
 
     /**

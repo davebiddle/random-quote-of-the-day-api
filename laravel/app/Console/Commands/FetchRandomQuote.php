@@ -5,6 +5,8 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 
 use App\API\RapidApiRequest;
+use App\Quote;
+use App\Author;
 
 class fetchRandomQuote extends Command
 {
@@ -39,14 +41,32 @@ class fetchRandomQuote extends Command
      */
     public function handle(RapidApiRequest $request)
     {
-        // fetch random quote from Rapid API endpoint
-        $response = $request->fetchRandomQuote();
+        // Fetch random quote and check if it is unique in the database. 
+        // If so, insert. Otherwise, repeat fetch/check/insert.
+        do {
+            $response = $request->fetchRandomQuote();
 
-        $this->info($response->body());
+            if ($response->failed()) {
+                // Todo :: notify someone somehow
+            }
+        } while ($response->successful() && Quote::where('quotepark_id', $response['id'])->count() > 0);
 
-        // todo
-        // - check if quote is unique in db
-        // if unique, insert - otherwise, repeat fetch/check/insert.
-        
+        $quote = new Quote();
+        $quote->quotepark_id = $response['id'];
+        $quote->content = $response['content'];
+        $quote->link = $response['url'];
+
+        // assign or insert quote's author
+        $author = $response['originator'];
+
+        $quote['author_id'] = Author::firstOrCreate(
+            ['quotepark_id' => $author['id']],
+            [
+                'name' => $author['name'],
+                'link' => $author['url'],
+            ]
+        )->id;
+
+        $quote->save();
     }
 }
