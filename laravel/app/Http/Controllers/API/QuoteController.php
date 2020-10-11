@@ -26,12 +26,12 @@ class QuoteController extends Controller
      */
     public function index()
     {
-        //
-        return response()->json(Quote::all());
+        // 4 quotes per page :: Todo :: 'per page' filter
+        return response()->json(Quote::paginate(4));
     }
 
     /**
-     * Display a listing of the resource.
+     * Return the latest quote in the database.
      *
      * @return \Illuminate\Http\Response
      */
