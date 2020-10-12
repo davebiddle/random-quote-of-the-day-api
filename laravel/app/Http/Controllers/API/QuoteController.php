@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Quote;
+use App\Http\Resources\Quote as QuoteResource;
 
 class QuoteController extends Controller
 {
@@ -39,7 +40,7 @@ class QuoteController extends Controller
      */
     public function latest()
     {
-        return response()->json(Quote::latest()->with('author')->first());
+        return (new QuoteResource(Quote::latest()->first()))->response();
     }
 
     /**

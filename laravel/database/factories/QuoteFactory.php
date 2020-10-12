@@ -15,9 +15,9 @@ $factory->define(Quote::class, function (Faker\Generator $faker) {
         'link' => $faker->link,
         'author_id' => function (array $quote) use ($faker) {
 
-            $authorExists = Author::where('quotepark_id', $faker->authorQuoteparkId)->count();
+            $author = Author::where('quotepark_id', $faker->authorQuoteparkId)->get()->first();
 
-            if ($authorExists) {
+            if ($author instanceof Author) {
                 return $author->id;
             }
 
