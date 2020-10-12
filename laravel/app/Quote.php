@@ -43,7 +43,7 @@ class Quote extends Model
             ->offset(1)
             ->limit($limit);
     }
-
+    
     /**
      * Get the Quote's full formatted date.
      * eg. "Thursday 17th September 2020"

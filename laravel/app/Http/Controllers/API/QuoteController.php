@@ -29,8 +29,8 @@ class QuoteController extends Controller
      */
     public function index()
     {
-        // 4 quotes per page :: Todo :: 'per page' filter
-        return response()->json(Quote::previous(0)->with('author')->paginate(4));
+        // 10 quotes per page :: Todo :: 'per page' filter
+        return response()->json(Quote::previous(0)->with('author')->paginate(10));
     }
 
     /**
@@ -40,7 +40,7 @@ class QuoteController extends Controller
      */
     public function latest()
     {
-        return (new QuoteResource(Quote::latest()->first()))->response();
+        return new QuoteResource(Quote::latest()->first());
     }
 
     /**
@@ -51,6 +51,6 @@ class QuoteController extends Controller
      */
     public function previous($limit)
     {
-        return response()->json(Quote::previous($limit)->with('author')->get());
+        return QuoteResource::collection(Quote::previous($limit)->get());
     }
 }
