@@ -14,10 +14,6 @@ class Author extends JsonResource
      */
     public function toArray($request)
     {
-        // 'authorName' => $author_resource->name,
-        //     'quoteLink' => $this->link,
-        //     'quoteparkAuthorLink' => $author_resource->link,
-        //     'wikiquoteAuthorLink' => $author_resource->wikiquote_link,
         return [
             'authorName' => $this->name,
             'quoteparkAuthorLink' => $this->link,

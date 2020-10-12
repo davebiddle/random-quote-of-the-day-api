@@ -17,6 +17,7 @@ class Quote extends JsonResource
     public function toArray($request)
     {
         return [
+            'id' => $this->id,
             'dateFormatted' => $this->full_formatted_date,
             'quoteContent' => $this->content,
             'author' => new AuthorResource($this->author),

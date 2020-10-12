@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Quote;
 use App\Http\Resources\Quote as QuoteResource;
+use App\Http\Resources\PreviousQuoteCollection;
 
 class QuoteController extends Controller
 {
@@ -30,7 +31,7 @@ class QuoteController extends Controller
     public function index()
     {
         // 10 quotes per page :: Todo :: 'per page' filter
-        return response()->json(Quote::previous(0)->with('author')->paginate(10));
+        return new PreviousQuoteCollection(Quote::previous(0)->paginate(10));
     }
 
     /**

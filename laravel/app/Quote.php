@@ -13,7 +13,8 @@ class Quote extends Model
      */
     protected $appends = [
         'full_formatted_date',
-        'short_formatted_date'
+        'short_formatted_date',
+        'excerpt',
     ];
 
     /**
@@ -43,7 +44,7 @@ class Quote extends Model
             ->offset(1)
             ->limit($limit);
     }
-    
+
     /**
      * Get the Quote's full formatted date.
      * eg. "Thursday 17th September 2020"
@@ -64,5 +65,19 @@ class Quote extends Model
     public function getShortFormattedDateAttribute()
     {
         return date('jS M Y', strtotime($this->created_at));
+    }
+
+    /**
+     * Get this Quote's excerpt, with quote characters.
+     * eg. "The variety of colour in objects cannot be...".
+     * 
+     * Note: &hellip; is not used for the ellipsis because
+     * our React frontend does escaping by default anyway.
+     *
+     * @return string
+     */
+    public function getExcerptAttribute()
+    {
+        return sprintf('"%s..."', substr($this->content, 0, 40));
     }
 }
