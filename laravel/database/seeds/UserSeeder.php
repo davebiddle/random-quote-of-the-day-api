@@ -21,7 +21,7 @@ class UserSeeder extends Seeder
             [
                 'email' => Str::random(10) . '@davebiddle.co.uk',
                 'password' => Hash::make(Str::random(16)),
-                'api_token' => Hash::make(Str::random(60)),
+                'api_token' => Str::random(60),
             ]
         );
     }

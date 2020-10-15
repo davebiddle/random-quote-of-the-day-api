@@ -7,6 +7,7 @@ use Illuminate\Console\Command;
 use App\API\RapidApiRequest;
 use App\Quote;
 use App\Author;
+use App\Tag;
 
 class fetchRandomQuote extends Command
 {
@@ -85,5 +86,15 @@ class fetchRandomQuote extends Command
         }
 
         $quote->save();
+
+        // save quote tags
+        $tags = $response['tags'];
+
+        foreach ($tags as $tag) {
+            Tag::create([
+                'quote_id' => $quote->id,
+                'content' => $tag,
+            ]);
+        }
     }
 }

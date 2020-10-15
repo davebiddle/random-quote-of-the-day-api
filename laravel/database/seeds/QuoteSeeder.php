@@ -67,7 +67,7 @@ class QuoteSeeder extends Seeder
      * 
      * @return string
      */
-    protected function getCreatedDate()
+    protected function getCreatedDate($count)
     {
         $quote = Quote::latest()->first();
         if ($quote instanceof Quote) {
@@ -80,12 +80,12 @@ class QuoteSeeder extends Seeder
             $date->sub(new DateInterval(sprintf('P%dD', $count))); // period of $count days
         }
 
-        // check if created date to be set is today's date, and 
+        // check if created date to be set is greater than today's date, and 
         // bail if it is. This is because we don't need any quotes 
         // newer than today.
         $today = new DateTime();
         
-        if ($date->format('Y-m-d') == $today->format('Y-m-d')) {
+        if ($date > $today) {
             return false;
         }
 

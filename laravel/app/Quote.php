@@ -30,6 +30,10 @@ class Quote extends Model
         return $this->belongsTo(Author::class);
     }
 
+    public function tags() {
+        return $this->hasMany(Tag::class);
+    }
+
     /**
      * Scope a query to only include the three latest quotes,
      * starting from the second latest quote.
@@ -78,6 +82,6 @@ class Quote extends Model
      */
     public function getExcerptAttribute()
     {
-        return sprintf('"%s..."', substr($this->content, 0, 40));
+        return sprintf('"%s..."', mb_substr($this->content, 0, 40));
     }
 }

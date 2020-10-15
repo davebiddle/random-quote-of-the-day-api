@@ -28,10 +28,16 @@ class QuoteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        // 10 quotes per page :: Todo :: 'per page' filter
-        return new PreviousQuoteCollection(Quote::previous(0)->paginate(10));
+        $per_page = $request->query('per_page', 10);
+        $order_by = $request->query('order', 'desc');
+
+        return new PreviousQuoteCollection(
+            Quote::orderBy('created_at', $order_by)
+                ->previous(0)
+                ->paginate($per_page)
+        );
     }
 
     /**
