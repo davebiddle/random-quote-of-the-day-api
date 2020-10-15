@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 
 use App\API\RapidApiRequest;
+use App\Helpers\QuoteVetter;
 use App\Quote;
 use App\Author;
 use App\Tag;
@@ -16,7 +17,7 @@ class fetchRandomQuote extends Command
      * 
      * The optional 'created_date' param will be used for
      * setting the 'created_at' column in the Quote model,
-     * is supplied.
+     * if supplied.
      *
      * @var string
      */
@@ -60,7 +61,11 @@ class fetchRandomQuote extends Command
             if ($response->failed()) {
                 // Todo :: notify someone somehow
             }
-        } while ($response->successful() && Quote::where('quotepark_id', $response['id'])->count() > 0);
+        } while (
+            $response->successful() && 
+            Quote::where('quotepark_id', $response['id'])->count() > 0 &&
+            QuoteVetter::vetQuoteResponse($response)
+        );
 
         $quote = new Quote();
         $quote->quotepark_id = $response['id'];
