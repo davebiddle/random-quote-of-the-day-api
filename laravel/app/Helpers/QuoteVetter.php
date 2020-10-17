@@ -10,11 +10,9 @@ class QuoteVetter
      */
     protected static $authors_to_exclude = [
         'Hitler',
-        'Adolf Hitler',
         'Stalin',
-        'Joseph Stalin',
         'Pinochet',
-        'Augusto Pinochet',
+        'Goebbels',
     ];
 
     /**
@@ -33,8 +31,8 @@ class QuoteVetter
      */
     public static function vetQuoteResponse(Response $quote_response)
     {
-        $author_name = $response['originator']['name'];
-        $quote_content = $response['content'];
+        $author_name = $quote_response['originator']['name'];
+        $quote_content = $quote_response['content'];
 
         // vet author name
         foreach (self::$authors_to_exclude as $author_to_exclude) {

@@ -54,7 +54,7 @@ class fetchRandomQuote extends Command
             // The RapidAPI endpoint used for retrieving Quote data has a 
             // rate limit of 1 request per second. So let's hang around for a bit
             // before making a request.
-            sleep(5); // to be on the safe side!
+            sleep(3); // to be on the safe side!
             
             $response = $request->fetchRandomQuote();
 
