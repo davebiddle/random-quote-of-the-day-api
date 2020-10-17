@@ -16,6 +16,6 @@ class Tag extends Model
     ];
 
     public function quote() {
-        return $this->belongsTo(Quote::class);
+        return $this->belongsTo('App\Quote');
     }
 }

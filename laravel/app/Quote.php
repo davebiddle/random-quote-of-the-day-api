@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Quote extends Model
 {
@@ -27,26 +28,25 @@ class Quote extends Model
     ];
 
     public function author() {
-        return $this->belongsTo(Author::class);
+        return $this->belongsTo('App\Author');
     }
 
     public function tags() {
-        return $this->hasMany(Tag::class);
+        return $this->hasMany('App\Tag');
     }
 
     /**
-     * Scope a query to only include the three latest quotes,
-     * starting from the second latest quote.
+     * Scope a query to only include quotes older than 
+     * today's quote.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  int  $limit
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopePrevious($query, $limit = 0)
+    public function scopePrevious($query)
     {
-        return $query->orderBy('created_at', 'desc')
-            ->offset(1)
-            ->limit($limit);
+        $today = new Carbon();
+
+        return $query->where('created_at', '<', $today->startOfDay());
     }
 
     /**

@@ -13,6 +13,7 @@ class QuoteVetter
         'Stalin',
         'Pinochet',
         'Goebbels',
+        'Rommel',
     ];
 
     /**
