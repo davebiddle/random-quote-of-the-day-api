@@ -62,10 +62,10 @@ class fetchRandomQuote extends Command
                 // Todo :: notify someone somehow
             }
         } while (
-            $response->successful() && 
-            Quote::where('quotepark_id', $response['id'])->count() > 0 &&
+            $response->successful() && (
+            Quote::where('quotepark_id', $response['id'])->exists() ||
             QuoteVetter::vetQuoteResponse($response)
-        );
+        ));
 
         $quote = new Quote();
         $quote->quotepark_id = $response['id'];
