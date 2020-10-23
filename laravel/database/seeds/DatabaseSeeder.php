@@ -11,6 +11,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+<<<<<<< HEAD
+=======
+        $this->call(UserSeeder::class);
+>>>>>>> feature/add-quotes-api
         $this->call(QuoteSeeder::class);
     }
 }
