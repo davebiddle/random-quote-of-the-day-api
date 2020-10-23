@@ -15,7 +15,30 @@ class Author extends Model
         'name', 'link', 'quotepark_id',
     ];
 
+    /**
+     * The accessors to append to this model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'wikiquote_link',
+    ];
+
     public function quotes() {
-        return $this->hasMany(Quote::class);
+        return $this->hasMany('App\Quote');
+    }
+
+    /**
+     * Build and return a Wikiquote search link for this author.
+     * eg. "https://en.wikiquote.org/w/index.php?search=Leonardo%20da%20Vinci"
+     *
+     * @return string
+     */
+    public function getWikiquoteLinkAttribute()
+    {
+        return sprintf(
+            'https://en.wikiquote.org/w/index.php?search=%s',
+            str_replace(' ', '+', $this->name)
+        );
     }
 }
