@@ -17,6 +17,8 @@ RUN ln -fs /usr/share/zoneinfo/Europe/London /etc/localtime
 RUN sed -i 's/DocumentRoot \/var\/www\/html/DocumentRoot \/var\/www\/html\/public/' \
     /etc/apache2/sites-available/000-default.conf
 
+RUN a2enmod rewrite
+
 # Install `mhsendmail` for configuring Mailhog container as outgoing email server, and configure PHP to use it
 # https://blog.mailtrap.io/mailhog-explained/#Set_up_MailHog_using_Docker
 WORKDIR /usr/bin
