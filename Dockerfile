@@ -14,8 +14,10 @@ RUN apt-get update && \
 RUN ln -fs /usr/share/zoneinfo/Europe/London /etc/localtime
 
 # Configure Apache's default vhost to point to Laravel's `public` directory
-RUN sed -i 's/DocumentRoot \/var\/www\/html/DocumentRoot \/var\/www\/html\/public/' \
-    /etc/apache2/sites-available/000-default.conf
+# RUN sed -i 's/DocumentRoot \/var\/www\/html/DocumentRoot \/var\/www\/html\/public/' \
+#     /etc/apache2/sites-available/000-default.conf
+
+COPY ./vhost.dev.conf /etc/apache2/sites-available/000-default.conf
 
 RUN a2enmod rewrite
 
