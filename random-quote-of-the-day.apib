@@ -1,0 +1,105 @@
+FORMAT: 1A
+
+# Random Quote of the Day
+
+Random Quote of the Day is an API for allowing consumers to view quotes and to save their favourite quotes for viewing later.
+
+## Quotes [/quotes]
+
+### List Quotes [GET /quotes/{?previous}{?latest}{?favourites}]
+
++ Parameters
+
+    + previous: `true` (bool, optional) - Whether to return quotes from previous days only.
+    + latest: `true` (bool, optional) - Whether to return quotes from previous days only.
+    + favourites: `true` (bool, optional) - Whether to return the logged in user's favourite quotes only.
+
++ Response 200 (application/json)
+
+        {
+            "data": [
+                {
+                    "id": 959,
+                    "isOpen": false,
+                    "formattedDate": "12th Nov 2020",
+                    "author": {
+                        "authorName": "Leonardo DiCaprio",
+                        "quoteparkAuthorLink": "https://quotepark.com/authors/leonardo-dicaprio/",
+                        "wikiquoteAuthorLink": "https://en.wikiquote.org/w/index.php?search=Leonardo+DiCaprio"
+                    },
+                    "quote": {
+                    "excerpt": "\"School, I never truly got the knack of. ...\"",
+                    "link": "https://quotepark.com/quotes/1820795-leonardo-dicaprio-school-i-never-truly-got-the-knack-of-i-could-ne/"
+                }
+            ],
+            "links": {
+                "first": "http://random-qotd.localhost/api/quotes?page=1",
+                "last": "http://random-qotd.localhost/api/quotes?page=31",
+                "prev": null,
+                "next": "http://random-qotd.localhost/api/quotes?page=2"
+            },
+            "meta": {
+                "current_page": 1,
+                "from": 1,
+                "last_page": 31,
+                "path": "http://random-qotd.localhost/api/quotes",
+                "per_page": 10,
+                "to": 10,
+                "total": 305
+            }
+        }
+
+### View Quote [GET /quotes/{id}]
+
++ Parameters
+
+    + id: `1234` (integer, required) - The id of the quote to view.
+
++ Response 200 (application/json)
+
+        {
+            "id": 1234,
+            "isOpen": false,
+            "formattedDate": "12th Nov 2020",
+            "author": {
+                "authorName": "Leonardo DiCaprio",
+                "quoteparkAuthorLink": "https://quotepark.com/authors/leonardo-dicaprio/",
+                "wikiquoteAuthorLink": "https://en.wikiquote.org/w/index.php?search=Leonardo+DiCaprio"
+            },
+            "quote": {
+            "excerpt": "\"School, I never truly got the knack of. ...\"",
+            "link": "https://quotepark.com/quotes/1820795-leonardo-dicaprio-school-i-never-truly-got-the-knack-of-i-could-ne/"
+        }
+
+## Favourites [/favourites]
+
+### Create a New Favourite [POST]
+
++ Request (application/json)
+
+        {
+            "user_id": 1234,
+            "quote_id": 1234
+        }
+
++ Response 201 (application/json)
+
+    + Headers
+
+            Location: /quotes/1234
+
+    + Body
+
+            {
+                "id": 1234,
+                "isOpen": false,
+                "formattedDate": "12th Nov 2020",
+                "author": {
+                    "authorName": "Leonardo DiCaprio",
+                    "quoteparkAuthorLink": "https://quotepark.com/authors/leonardo-dicaprio/",
+                    "wikiquoteAuthorLink": "https://en.wikiquote.org/w/index.php?search=Leonardo+DiCaprio"
+                },
+                "quote": {
+                "excerpt": "\"School, I never truly got the knack of. ...\"",
+                "link": "https://quotepark.com/quotes/1820795-leonardo-dicaprio-school-i-never-truly-got-the-knack-of-i-could-ne/"
+            }
