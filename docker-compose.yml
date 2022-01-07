@@ -43,7 +43,7 @@ services:
       - default
 
   composer:
-    image: composer
+    image: composer:1
     user: ${HOST_USER_ID}:${HOST_GROUP_ID}
     volumes:
       - ./laravel:/var/www/html

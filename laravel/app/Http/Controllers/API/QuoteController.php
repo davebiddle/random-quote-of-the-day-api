@@ -20,7 +20,15 @@ class QuoteController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api');
+        $this->middleware('auth:api', ['except' => [
+            'index',
+            'latest',
+            'previous',
+            'fetchTodaysRandomQuote',
+            'refreshQuoteForDate',
+            'deleteQuoteForDate',
+            'deleteQuotebyDate',
+        ]]);
     }
 
     /**
